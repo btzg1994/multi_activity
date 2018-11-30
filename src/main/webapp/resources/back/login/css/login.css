@@ -1,0 +1,67 @@
+@charset "utf-8";
+/* CSS Document */
+body{ background-color:#e7e8eb; font-family:"微软雅黑", "宋体"; font-size:12px; line-height:22px; color:#000;}
+
+li, dd, ol, ul {
+	list-style-type: none;
+}
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+img {
+	border: 0px;
+}
+.clear {
+	clear: both; font-size:0px; line-height:0px; height:0px;
+}
+body, div, span, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, blockquote, table, td, tr, th, p {
+	padding: 0;
+	margin: 0;
+}
+
+
+.margin_top15{ margin-top:15px;}
+.margin_top30{ margin-top:30px;}
+.px14{ font-size:14px !important;}
+
+.lvzi{ color:#45b44d;}
+.redzi{ color:#F00;}
+a.bluese{ color:#006dc9;}
+a.redse{ color:#09C;}
+
+
+
+/*顶部*/
+
+.mytop{ border-top:4px solid #44b549; border-bottom:1px solid #d9dadc; height:100px; background-color:#FFF;}
+.mytopn{ width:1000px; margin:auto;}
+.mylogo{ float:left; padding-top:20px;}
+.mytopr{ float:right; padding-right:10px;}
+
+/*登录*/
+.dlmain{ background-image:url(../img/beijing.jpg); background-position:center top; background-repeat:no-repeat; height:574px;}
+.dlmainnr{ width:980px; margin:auto;}
+
+/*登录框*/
+.login_box {height:0;position:relative;margin:0 auto;z-index:2;width:980px;}
+.login{position:absolute;width:276px;height:300px;overflow:hidden; padding:10px 25px;top:110px; right:0; border:1px solid #dedede; border-top:3px solid #44b549; background-color:#FFF;}
+.login .ptit{ text-align:left; padding-top:10px; padding-bottom:5px; font-size:20px; color:#444;}
+.login dd{ padding:9px 0px;}
+.input_name{  border:1px solid #dedede; padding:0px 23px 0px 5px; background:url(../img/zhanghu.png) no-repeat right; height:35px;}
+.input_password{ border:1px solid #dedede; padding:0px 23px 0px 5px; background:url(../img/mima.png) no-repeat right; height:35px;}
+.name_wid{ width:245px;}
+p.kbqc{ float:right; color:#007ce5; cursor:pointer; padding-top:3px;}
+.input_yzm{ border:1px solid #dedede; padding:0px 5px 0px 5px; height:35px;}
+
+a.denglu{ background-color:#f7494b; height:35px;  border-radius:3px; color:#FFF; width:100%; display:inline-block; text-align:center; line-height:34px; font-size:16px;}
+
+a.zhuce{ background-color:#17bf6b; height:35px;  border-radius:3px; color:#FFF; width:100%; display:inline-block; text-align:center; line-height:34px; font-size:16px; text-decoration:none;}
+.error{ font-size:12px; text-align:center; color:#F00;margin-top:0px; background-color:#fffcf5; border:1px solid #f5e0ab; padding:5px;}
+
+.footer{ text-align:center; font-size:12px; color:#666666; padding:20px 0px;}
+
+
+

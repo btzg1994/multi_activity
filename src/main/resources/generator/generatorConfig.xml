@@ -27,9 +27,9 @@
         <javaClientGenerator targetPackage="me.ffs.www.dao.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-       <table tableName="%">
-        </table>
-        <!-- <table tableName="pms_role_permission" domainObjectName="PmsRolePermission"></table> -->
+       <!-- <table tableName="%">
+        </table> -->
+        <table tableName="activity" domainObjectName="Activity"></table>
 
     </context>
 </generatorConfiguration>

@@ -1,26 +1,17 @@
 package me.ffs.www.conf;
-import java.nio.charset.Charset;
-import java.util.List;
 
-import javax.servlet.ServletException;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.servlet.TomcatServletWebServerFactoryCustomizer;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
-import com.google.code.kaptcha.servlet.KaptchaServlet;
-
-import me.ffs.www.control.interceptor.UserSecurityInterceptor;
+import me.ffs.www.control.interceptor.AccessInterceptor;
+import me.ffs.www.control.interceptor.LoginInterceptor;
 
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -57,7 +48,9 @@ public class ApplicationConfigurerAdapter  implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new UserSecurityInterceptor()).addPathPatterns("/**","/pay/**","/ql/**");
+//        registry.addInterceptor(new UserSecurityInterceptor()).addPathPatterns("/**","/pay/**","/ql/**");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/global/**","/front/anony/**","/back/anony/**","/resources/**","/images/**");
+        registry.addInterceptor(new AccessInterceptor()).addPathPatterns("/front/anony/signup");
     }
 
 }

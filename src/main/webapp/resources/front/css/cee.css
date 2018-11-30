@@ -1,0 +1,24 @@
+
+@charset "utf-8";
+
+ body{ 
+    margin: 0;
+	padding: 0; }
+ .content{width: 1080px;background-color: #a30602; margin: auto;}
+@media screen and (max-width:280px) {
+.content {
+	width: 280px;
+	margin: 0 auto;}
+}
+@media screen and (min-width:281px) and (max-width:720px) {
+.content {
+	width: 100%;
+	margin: 0 auto;
+	
+}
+}
+@media screen and (min-width:720px) {
+.content {
+	width:720px;
+	margin: 0 auto;
+img{width: 100%;}}
