@@ -18,6 +18,8 @@
 <link href="${pageContext.request.contextPath}/resources/back/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="${pageContext.request.contextPath}/resources/back/css/my.css" rel="stylesheet" type="text/css">   
 <link href="${pageContext.request.contextPath}/resources/back/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">   
+<link href="${pageContext.request.contextPath}/resources/jpicker-1.1.6/css/jPicker-1.1.6.min.css" rel="stylesheet" type="text/css">   
+<link href="${pageContext.request.contextPath}/resources/jpicker-1.1.6/jPicker.css" rel="stylesheet" type="text/css"> 
 <style type="text/css">
 	.pms_unit{}
 	.pms_second{}
@@ -45,6 +47,7 @@
 <script src="${pageContext.request.contextPath}/resources/back/js/myjs.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/back/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/back/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jpicker-1.1.6/jpicker-1.1.6.min.js"></script>
 <script type="text/javascript">
 	
 $(function(){
@@ -54,9 +57,27 @@ $(function(){
 		var name = $('#name').val();
 		var startTime = $('#startTime').val();
 		var endTime = $('#endTime').val();
+		var bgColor = $('#bgColor').val();
+		var btnColor = $('#btnColor').val();
+		var btnTextColor = $('#btnTextColor').val();
+		var shareText = $('#shareText').val();
+		var baseNumber = $('#baseNumber').val();
+		var pvBaseNumber = $('#pvBaseNumber').val();
 		
 		if(!name){
 			alert('活动名称不能为空！')
+			return;
+		}
+		if(!bgColor){
+			alert('背景颜色不能为空！');
+			return;
+		}
+		if(!btnColor){
+			alert('按钮颜色不能为空！');
+			return;
+		}
+		if(!btnTextColor){
+			alert('按钮内的文字颜色不能为空！');
 			return;
 		}
 		if(!startTime){
@@ -65,6 +86,26 @@ $(function(){
 		}
 		if(!endTime){
 			alert('活动结束时间不能为空！')
+			return;
+		}
+		if(!shareText){
+			alert('微信分享语不能为空！');
+			return;
+		}
+		if(!baseNumber){
+			alert('报名基数不能为空！');
+			return;
+		}
+		if(baseNumber < 0){
+			alert('报名基数不能小于0！');
+			return;
+		}
+		if(!pvBaseNumber){
+			alert('关注人数基数不能为空！');
+			return;
+		}
+		if(pvBaseNumber < 0){
+			alert('关注人数基数不能小于0！');
 			return;
 		}
 		var x1 = Date.parse(startTime);
@@ -114,7 +155,55 @@ $(function(){
 	    minuteStep:1
 	});
 	
+	const jpickerSettings= {
+          window:
+          {
+        	  position:
+              {
+                x: 'screenCenter', /* acceptable values "left", "center", "right", "screenCenter", or relative px value */
+                y: 'bottom' /* acceptable values "top", "bottom", "center", or relative px value */
+              },
+            expandable: true
+          },
+          images:
+          {
+            //clientPath: '/'+document.location.pathname.split("/")[1]+'/commons/jpicker-1.1.6/images/', /* Path to image files */
+            clientPath: '${pageContext.request.contextPath}/resources/jpicker-1.1.6/images/', /* Path to image files */
+          },
+          localization: /* alter these to change the text presented by the picker (e.g. different language) */
+          {
+            text:
+            {
+              title: '拖动鼠标选中一个颜色',
+              newColor: '选中颜色',
+              currentColor: '当前颜色',
+              ok: '确定',
+              cancel: '取消'
+            },
+            tooltips:
+            {
+              colors:
+              {
+                newColor: '点击‘确定’提交新选颜色',
+                currentColor: '点击这里还原当前颜色'
+              },
+              buttons:
+              {
+                ok: '提交选中的颜色',
+                cancel: '取消并恢复当前颜色'
+              }
+            }
+          }
+          
+        };
 	
+	 /* 背景颜色 */
+	 $("#bgColor").jPicker(jpickerSettings);
+	 /* 按钮颜色 */
+	 $("#btnColor").jPicker(jpickerSettings);
+	 /* 按钮文字颜色 */
+	 $("#btnTextColor").jPicker(jpickerSettings);
+	/************************jpicker********************************/
 });
 </script>
 </head>
@@ -181,12 +270,32 @@ $(function(){
 	                            <td><input id="name"  name="name" type="text" class="form-control myinput" value="${activity.name }"></td>
 	                          </tr>
 	                          <tr >
-	                            <th>活动图片：</th>
+	                            <th>当前活动图片：</th>
 								<td ><img width="150px;" src="${pageContext.request.contextPath}/${activity.bannerUrl}"></td>
 	                          </tr>
 	                          <tr >
 	                            <th>新活动图片：</th>
-								<td ><input style="border: none;" id="banner"  name="banner" type="file" class="form-control myinput" ></td>
+								<td ><input style="border: none;" id="banner"  name="banner" type="file" class="form-control myinput" ><font style="color:red;">（建议图片尺寸：1080*1423，大小不超过100KB）</font></td>
+	                          </tr>
+	                          <tr >
+	                            <th>当前背景音乐：</th>
+								<td ><audio controls="controls" src="${pageContext.request.contextPath}/${activity.musicUrl}"></audio></td>
+	                          </tr>
+	                          <tr >
+	                            <th>新背景音乐：</th>
+								<td ><input style="border: none;" id="music"  name="music" type="file" class="form-control myinput" ><font style="color:red;">（建议音乐文件大小不超过 1MB）</font></td>
+	                          </tr>
+	                          <tr >
+	                            <th>背景颜色：</th>
+								<td ><input  id="bgColor"  name="bgColor" type="text" class="form-control myinput" value="${activity.bgColor }" ></td>
+	                          </tr>
+	                          <tr >
+	                            <th>按钮颜色：</th>
+								<td ><input  id="btnColor"  name="btnColor" type="text" class="form-control myinput" value="${activity.btnColor }"></td>
+	                          </tr>
+	                          <tr >
+	                            <th>按钮内的文字颜色：</th>
+								<td ><input  id="btnTextColor"  name="btnTextColor" type="text" class="form-control myinput" value="${activity.btnTextColor }"></td>
 	                          </tr>
 	                          <tr>
 	                            <th>活动开始时间：</th>
@@ -197,6 +306,26 @@ $(function(){
 	                            <th>活动结束时间：</th>
 	                            <td><input id="endTime" name="endTime" type="text" class="form-control myinput" value='<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss"
 												value="${activity.endTime }" />' ></td>
+	                          </tr>
+	                          <tr >
+	                            <th>当前微信分享图片：</th>
+								<td ><img width="150px;" src="${pageContext.request.contextPath}/${activity.shareImg}"></td>
+	                          </tr>
+	                           <tr >
+	                            <th>新微信分享图片：</th>
+								<td ><input style="border: none;" id="shareImg"  name="shareImg" type="file" class="form-control myinput" > <font style="color:red;">（建议图片尺寸：200*200，大小不超过20KB）</font></td>
+	                          </tr>
+	                          <tr>
+	                            <th>微信分享语：</th>
+	                            <td>	<textarea id="shareText" name="shareText" rows="7" class="form-control myinput">${activity.shareText }</textarea> </td>
+	                          </tr>
+	                          <tr>
+	                            <th>报名基数：</th>
+	                            <td>	<input  id="baseNumber"  name="baseNumber" type="number" class="form-control myinput" value="${activity.baseNumber }"> </td>
+	                          </tr>
+	                          <tr>
+	                            <th>关注人数基数：</th>
+	                            <td>	<input  id="pvBaseNumber"  name="pvBaseNumber" type="number" class="form-control myinput" value="${activity.pvBaseNumber}"> </td>
 	                          </tr>
 	                          <tr>
 	                            <th>备注：</th>

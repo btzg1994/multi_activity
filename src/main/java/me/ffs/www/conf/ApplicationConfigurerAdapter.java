@@ -49,7 +49,7 @@ public class ApplicationConfigurerAdapter  implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 //        registry.addInterceptor(new UserSecurityInterceptor()).addPathPatterns("/**","/pay/**","/ql/**");
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/global/**","/front/anony/**","/back/anony/**","/resources/**","/images/**");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/global/**","/front/anony/**","/back/anony/**","/resources/**","/images/**","/403/**","/404/**","/500/**","/audio/**","/share_img/**");
         registry.addInterceptor(new AccessInterceptor()).addPathPatterns("/front/anony/signup");
     }
 

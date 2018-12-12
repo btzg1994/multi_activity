@@ -186,9 +186,9 @@
 
 				<div class="rgcon bodybai">
 					<div class="butdivs">
-						<%-- <a type="button"
+						<a type="button"
 							href="${pageContext.request.contextPath}/back/activity/addActivityView"
-							class="btn btn-info">添加活动</a> --%> </div>
+							class="btn btn-info">添加活动</a> </div>
 						<div class="border-bom">
 						<table width="100%" border="0" cellspacing="0" cellpadding="0"
 							class="table mytab">

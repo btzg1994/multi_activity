@@ -21,4 +21,79 @@
 .content {
 	width:720px;
 	margin: 0 auto;
-img{width: 100%;}}
+}
+}
+
+img{width: 100%;}
+
+.djs{ margin:auto; padding:0px; margin:0px; padding:10px 10px; padding-bottom:20px;}
+.tabdjs{ border-collapse:collapse; border:0px !important; margin:auto !important; width:inherit !important;}
+.tabdjs tr{border:0px !important; padding:0px; margin:0px;  height:auto !important;}
+.tabdjs td{border:0px !important; padding:0px; margin:0px; text-align:center; vertical-align:middle; padding:0px 3px;}
+.tabdjs th{ font-size:14px; color:#fff; text-align:center; line-height:1.1em; border:0px !important; padding:0px !important; margin:0px;  padding-top:5px !important; font-weight:normal;}
+.tabdjs td.imgdian{  text-align:center;}
+.tabdjs td.imgdian img{width:5px;}
+
+.jsspan{ background-color:#c82521; border-radius:8px; -webkit-border-radius:8px; display:inline-block; position:relative; overflow:hidden;}
+.jsspan  .xian{ height:1px; background-color:#2d2029; width:100%; position:absolute; top:50%; transform:translate(0,-50%); -webkit-transform:translate(0,-50%); left:0px; z-index:3;}
+.jsspan .divx{ color:#fff; text-align:center; font-size:25px; font-weight:bold; padding:15px 10px; line-height:1.1em; position:relative; z-index:5;}
+
+
+@media screen and (min-width:400px) {
+.jsspan .divx{padding:15px 18px;}
+}
+
+
+.jstab{ display:table; width:86%; margin:auto; margin-top:5px;}
+.jstab-lf{ display:table-cell; vertical-align:bottom; text-align:left;}
+.jstab-lf img{ width:60px;}
+.jstab-rg{ display:table-cell; vertical-align:bottom; text-align:right; color:#FFF; font-size:15px;}
+
+
+/*新增上传弹层--------------------------------*/
+.mengban{ height:100%; width:100%; position:fixed; background-color:rgba(0,0,0,0.6); z-index:3000; left:0px; top:0px;}
+.tckn{ height:100%; width:100% !important; border:0px; padding:0px; margin-top:inherit !important; margin-left:inherit !important; }
+.tckn tr{ border:0px !important;}
+.tckn td{ height:100%; vertical-align:middle; padding:0px !important; border:0px !important;}
+.share_fx_fxtc{ margin:auto; -webkit-border-radius: 5px;
+	 padding:15px 0px; margin:auto;    color:#222222; position:relative; width:80%; max-width:460px; }
+.share_fx_fxtcnr2{  
+    
+    -moz-border-radius: 10px;
+	-o-border-radius: 10px;
+	border-radius: 10px; background-color:#fff; border:0px  #f56370 solid; padding-bottom:0px; margin:auto; overflow:hidden; position:relative;}
+
+.tc-tit{}
+.tcclose{ position:absolute; z-index:10; top:22px; right:3px; background-repeat:no-repeat; background-size:80% auto; width:30px; height:30px; background-image:url(../img/icon-close.png); cursor:pointer;}
+
+.tcbr{ padding:20px; padding-bottom:10px;}
+.dltc{ margin:0px; padding:0px; list-style:none;}
+.dltc dt{margin:0px; padding:0px; list-style:none; text-align:center; font-size:17px; text-align:center; color:#404040; font-weight:bold; line-height:1.1em; margin-bottom:15px; padding-top:5px;}
+.dltc dd{margin:0px; padding:0px; list-style:none; margin-bottom:15px; padding:0px;}
+.dltc dd:last-child{ margin-bottom:0px;}
+
+
+.input-dl{
+	border: 1px #dcdcdc solid; height:50px;
+	width: 100%;
+	color: #222;
+	font-size: 16px;
+	padding-left: 10px; padding-right:10px; font-family:'Microsoft YaHei',"宋体";  background-color:#fff; box-sizing:border-box;
+	
+	-webkit-appearance: none  !important;
+	appearance: none !important;
+	-o-appearance: none;
+	box-shadow:none !important;
+	-webkit-box-shadow:none !important; outline:none; border-radius:5px; -webkit-border-radius:5px;
+	    
+}
+
+
+.input-dl::-webkit-input-placeholder{ font-size:15px; }
+.input-dl::-moz-placeholder{font-size:15px; }
+.input-dl::-moz-placeholder{font-size:15px;}
+.butdiv{ text-align:center;}
+.butdiv img{ width:70%; cursor:pointer;}
+
+.perror{ text-align:left; font-size:14px; color:#F00;}
+

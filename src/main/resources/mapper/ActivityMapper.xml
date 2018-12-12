@@ -1,16 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="me.ffs.www.dao.mapper.ActivityMapper">
-  <resultMap id="BaseResultMap" type="me.ffs.www.model.Activity">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.ffs.www.dao.mapper.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="me.ffs.www.model.Activity" >
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="banner_url" jdbcType="VARCHAR" property="bannerUrl" />
-    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
-    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="banner_url" property="bannerUrl" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="pv" property="pv" jdbcType="INTEGER" />
+    <result column="bg_color" property="bgColor" jdbcType="VARCHAR" />
+    <result column="btn_color" property="btnColor" jdbcType="VARCHAR" />
+    <result column="btn_text_color" property="btnTextColor" jdbcType="VARCHAR" />
+    <result column="music_url" property="musicUrl" jdbcType="VARCHAR" />
+    <result column="share_img" property="shareImg" jdbcType="VARCHAR" />
+    <result column="base_number" property="baseNumber" jdbcType="INTEGER" />
+    <result column="pv_base_number" property="pvBaseNumber" jdbcType="INTEGER" />
+    <result column="share_text" property="shareText" jdbcType="LONGVARCHAR" />
   </resultMap>
 </mapper>

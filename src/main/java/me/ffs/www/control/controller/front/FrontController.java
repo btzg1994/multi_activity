@@ -59,7 +59,12 @@ public class FrontController {
 			}
 			
 			
-			String bannerUrl = activity.getBannerUrl();
+			//正在关注数量加1并更新数据库
+			Integer pv = activity.getPv() + 1;
+			Activity activity2 = new Activity();
+			activity2.setId(activity.getId());
+			activity2.setPv(pv);
+			activityService.updateOne(activity2);
 			
 			List<Customer> customers = customerService.findByActivityId(id_);
 			int customer_count = 0;
@@ -89,11 +94,23 @@ public class FrontController {
 				customer_list.add(map);
 			}
 			long endTime = activity.getEndTime().getTime();
-			request.setAttribute("id", id_);//活动id
-			request.setAttribute("bannerUrl", bannerUrl);//活动图片地址
+			request.setAttribute("activity", activity);//活动对象
 			request.setAttribute("customer_list", customer_list);//客户信息map
 			request.setAttribute("customer_count", customer_count);//客户数量
 			request.setAttribute("endTime", endTime);//活动结束时间
+			
+			String wxShareImgUrl = "";//微信分享图地址
+			String wxShareUrl = "";// 微信分享地址
+			if(PublicService.devMode){//开发模式
+				wxShareImgUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() +"/" +activity.getShareImg(); 
+				wxShareUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() +"/front/anony/index/" + activity.getId();
+			}else{
+				wxShareImgUrl = request.getScheme() + "://" + request.getServerName() + request.getContextPath() +"/" +activity.getShareImg(); 
+				wxShareUrl = request.getScheme() + "://" + request.getServerName()  + request.getContextPath() +"/front/anony/index/" + activity.getId();
+			}
+			request.setAttribute("wxShareImgUrl", wxShareImgUrl);//活动结束时间
+			request.setAttribute("wxShareUrl", wxShareUrl);//活动结束时间
+			
 			
 		} catch (Exception e) {
 			logger.warn("活动首页异常：",e);
@@ -103,17 +120,12 @@ public class FrontController {
 		return "front/index";
 	}
 	
-	/**
-	 * 报名页面
-	 * @param id
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("anony/signupView/{id}")
+	//	  报名页面
+	/*@RequestMapping("anony/signupView/{id}")
 	public String signupView(@PathVariable("id") String id,HttpServletRequest request){
 		request.setAttribute("id", id);
 		return "front/signup";
-	}
+	}*/
 	
 	/**
 	 * 客户报名
@@ -195,14 +207,11 @@ public class FrontController {
 		}
 	}
 	
-	/**
-	 * 报名成功页面
-	 * @return
-	 */
-	@RequestMapping("anony/finishView")
+	//报名成功页面
+	/*@RequestMapping("anony/finishView")
 	public String signupView(){
 		return "front/finish";
 	}
-	
+	*/
 	
 }

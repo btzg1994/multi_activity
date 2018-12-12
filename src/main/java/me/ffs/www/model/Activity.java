@@ -9,13 +9,12 @@ public class Activity implements Serializable{
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 3764282776888722655L;
+	private static final long serialVersionUID = 7434392207680596846L;
 
 	/**
      * 活动id
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
@@ -48,6 +47,53 @@ public class Activity implements Serializable{
     private Date createTime;
 
     private String remark;
+
+    /**
+     * 页面访问次数
+     */
+    private Integer pv;
+
+    /**
+     * 背景色
+     */
+    @Column(name = "bg_color")
+    private String bgColor;
+
+    /**
+     * 按钮颜色
+     */
+    @Column(name = "btn_color")
+    private String btnColor;
+
+    /**
+     * 按钮文本颜色
+     */
+    @Column(name = "btn_text_color")
+    private String btnTextColor;
+
+    /**
+     * 音乐地址
+     */
+    @Column(name = "music_url")
+    private String musicUrl;
+
+    @Column(name = "share_img")
+    private String shareImg;
+
+    /**
+     * 报名人数基数
+     */
+    @Column(name = "base_number")
+    private Integer baseNumber;
+
+    /**
+     * 页面访问次数基数
+     */
+    @Column(name = "pv_base_number")
+    private Integer pvBaseNumber;
+
+    @Column(name = "share_text")
+    private String shareText;
 
     /**
      * 获取活动id
@@ -158,16 +204,170 @@ public class Activity implements Serializable{
     }
 
     /**
-     * @return reamrk
+     * @return remark
      */
     public String getRemark() {
         return remark;
     }
 
     /**
-     * @param reamrk
+     * @param remark
      */
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    /**
+     * 获取页面访问次数
+     *
+     * @return pv - 页面访问次数
+     */
+    public Integer getPv() {
+        return pv;
+    }
+
+    /**
+     * 设置页面访问次数
+     *
+     * @param pv 页面访问次数
+     */
+    public void setPv(Integer pv) {
+        this.pv = pv;
+    }
+
+    /**
+     * 获取背景色
+     *
+     * @return bg_color - 背景色
+     */
+    public String getBgColor() {
+        return bgColor;
+    }
+
+    /**
+     * 设置背景色
+     *
+     * @param bgColor 背景色
+     */
+    public void setBgColor(String bgColor) {
+        this.bgColor = bgColor;
+    }
+
+    /**
+     * 获取按钮颜色
+     *
+     * @return btn_color - 按钮颜色
+     */
+    public String getBtnColor() {
+        return btnColor;
+    }
+
+    /**
+     * 设置按钮颜色
+     *
+     * @param btnColor 按钮颜色
+     */
+    public void setBtnColor(String btnColor) {
+        this.btnColor = btnColor;
+    }
+
+    /**
+     * 获取按钮文本颜色
+     *
+     * @return btn_text_color - 按钮文本颜色
+     */
+    public String getBtnTextColor() {
+        return btnTextColor;
+    }
+
+    /**
+     * 设置按钮文本颜色
+     *
+     * @param btnTextColor 按钮文本颜色
+     */
+    public void setBtnTextColor(String btnTextColor) {
+        this.btnTextColor = btnTextColor;
+    }
+
+    /**
+     * 获取音乐地址
+     *
+     * @return music_url - 音乐地址
+     */
+    public String getMusicUrl() {
+        return musicUrl;
+    }
+
+    /**
+     * 设置音乐地址
+     *
+     * @param musicUrl 音乐地址
+     */
+    public void setMusicUrl(String musicUrl) {
+        this.musicUrl = musicUrl;
+    }
+
+    /**
+     * @return share_img
+     */
+    public String getShareImg() {
+        return shareImg;
+    }
+
+    /**
+     * @param shareImg
+     */
+    public void setShareImg(String shareImg) {
+        this.shareImg = shareImg;
+    }
+
+    /**
+     * 获取报名人数基数
+     *
+     * @return base_number - 报名人数基数
+     */
+    public Integer getBaseNumber() {
+        return baseNumber;
+    }
+
+    /**
+     * 设置报名人数基数
+     *
+     * @param baseNumber 报名人数基数
+     */
+    public void setBaseNumber(Integer baseNumber) {
+        this.baseNumber = baseNumber;
+    }
+
+    /**
+     * 获取页面访问次数基数
+     *
+     * @return pv_base_number - 页面访问次数基数
+     */
+    public Integer getPvBaseNumber() {
+        return pvBaseNumber;
+    }
+
+    /**
+     * 设置页面访问次数基数
+     *
+     * @param pvBaseNumber 页面访问次数基数
+     */
+    public void setPvBaseNumber(Integer pvBaseNumber) {
+        this.pvBaseNumber = pvBaseNumber;
+    }
+
+    /**
+     * @return share_text
+     */
+    public String getShareText() {
+        return shareText;
+    }
+
+    /**
+     * @param shareText
+     */
+    public void setShareText(String shareText) {
+        this.shareText = shareText;
     }
 }

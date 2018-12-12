@@ -1,7 +1,6 @@
 package me.ffs.www.control.controller.back;
 
 
-import java.io.File;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -138,27 +138,87 @@ public class BackController {
 		return "back/activity_add";
 	}
 	
-	
-	/*@RequestMapping("activity/addActivity")
+	/**
+	 * 添加活动
+	 * @param request
+	 * @param banner
+	 * @return
+	 */
+	@RequestMapping("activity/addActivity")
 	@ResponseBody
-	public Map<String,Object> addActivity(HttpServletRequest request,@RequestParam("banner") MultipartFile banner){
+	public Map<String,Object> addActivity(HttpServletRequest request,@RequestParam("banner") MultipartFile banner,@RequestParam("music") MultipartFile music,@RequestParam("shareImg") MultipartFile shareImg){
 		HashMap<String, Object> rspMap = new HashMap<String, Object>();
 		try {
 			String name = request.getParameter("name") != null ? request.getParameter("name") :"";
 			String startTime = request.getParameter("startTime") != null ? request.getParameter("startTime") :"";
 			String endTime = request.getParameter("endTime") != null ? request.getParameter("endTime") :"";
 			String remark = request.getParameter("remark") != null ? request.getParameter("remark") :"";
+
+			String bgColor = request.getParameter("bgColor") != null ? request.getParameter("bgColor") :"";
+			String btnColor = request.getParameter("btnColor") != null ? request.getParameter("btnColor") :"";
+			String btnTextColor = request.getParameter("btnTextColor") != null ? request.getParameter("btnTextColor") :"";
+			
+			String shareText = request.getParameter("shareText") != null ? request.getParameter("shareText") :"";
+			String baseNumber = request.getParameter("baseNumber") != null ? request.getParameter("baseNumber") :"";
+			String pvBaseNumber = request.getParameter("pvBaseNumber") != null ? request.getParameter("pvBaseNumber") :"";
+			
 			//校验参数
 			if(StringUtils.isBlank(name) || StringUtils.isBlank(startTime) || StringUtils.isBlank(endTime)){
 				rspMap.put("rspCode", "0");
 				rspMap.put("rspMsg", "提交的参数有误！");
 				return rspMap;
 			}
-			if( banner.isEmpty()|| !FileUtil.isImage(banner)){
+			if( banner.isEmpty() || !FileUtil.isImage(banner)){
 				rspMap.put("rspCode", "0");
 				rspMap.put("rspMsg", "上传的图片格式错误！");
 				return rspMap;
 			}
+			
+			if(music.isEmpty() || !FileUtil.isAudio(music)){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "上传的音乐格式错误！");
+				return rspMap;
+			}
+			
+			if( shareImg.isEmpty() || !FileUtil.isImage(shareImg)){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "上传的图片格式错误！");
+				return rspMap;
+			}
+			
+			if(!StringUtils.isNumeric(baseNumber) || Integer.parseInt(baseNumber) < 0 ){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "报名基数必须是大于等于0的整数！");
+				return rspMap;
+			}
+			
+			if(!StringUtils.isNumeric(pvBaseNumber) || Integer.parseInt(pvBaseNumber) < 0 ){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "关注人数基数必须是大于等于0的整数！");
+				return rspMap;
+			}
+			
+			String regex = "[0-9a-f]{6}";
+			Pattern colorPattern = Pattern.compile(regex);
+			if(!colorPattern.matcher(bgColor).matches()){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "背景色值格式有误！");
+				return rspMap;
+			}
+			
+			if(!colorPattern.matcher(btnColor).matches()){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "按钮色值格式有误！");
+				return rspMap;
+			}
+			
+			if(!colorPattern.matcher(btnTextColor).matches()){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "按钮内文字色值格式有误！");
+				return rspMap;
+			}
+		
+			
 			String pattern = PublicService.DATETIME_PATTERN;
 			
 			Date startDate = DateUtils.parseDate(startTime, pattern);
@@ -171,13 +231,20 @@ public class BackController {
 				return rspMap;
 			}
 			
-			//添加活动
+			//添加活动 
 			Activity activity = new Activity();
 			activity.setName(name);
 			activity.setStartTime(startDate);
 			activity.setEndTime(endDate);
 			activity.setCreateTime(new Date());
 			activity.setRemark(remark);
+			activity.setBgColor(bgColor);
+			activity.setBtnColor(btnColor);
+			activity.setBtnTextColor(btnTextColor);
+			activity.setPv(1);
+			activity.setShareText(shareText);
+			activity.setBaseNumber(Integer.parseInt(baseNumber));
+			activity.setPvBaseNumber(Integer.parseInt(pvBaseNumber));
 			Integer res = activityService.addOne(activity);
 			
 			if(res != 1){
@@ -185,34 +252,31 @@ public class BackController {
 			}
 			Integer id = activity.getId();
 			
-			//存储图片
+			//存储banner图片
 			String basePath = PublicService.basePath;
-			String dirPath = basePath + "images/" +id;
+			String path_banner = "images/" +id;
+			String dirPath = basePath + path_banner;
 			
-			File dir = new File(dirPath);
-			if (!dir.exists()) {// 判断目标目录是否存在
-				dir.mkdirs();// 不存在则创建
-			}
+			String bannerFileName = FileUtil.storeFile(basePath, dirPath, banner, id);
 			
-			File tmp = new File(basePath + "tmp");
-			if (!tmp.exists()) {
-				tmp.mkdirs();
-			}
-			String fileName = banner.getOriginalFilename();
-			String prefix = fileName.substring(fileName.lastIndexOf("."));
-
-			File tempFile = File.createTempFile(fileName, prefix, tmp);
-			banner.transferTo(tempFile);
-
-			fileName = System.currentTimeMillis() + "_";
-			fileName += id + prefix;
+			//存储音乐
+			String path_music = "audio/" +id;
+			String audioDirPath = basePath + path_music;
+			String musicFileName = FileUtil.storeFile(basePath, audioDirPath, music, id);
 			
-			File localFile = new File(dir, fileName);
-			tempFile.renameTo(localFile);
-			// 图片上传成功后，存储路径到数据库
+			//存储微信分享图片
+			String path_share_img = "share_img/" +id;
+			String shareImgDirPath = basePath + path_share_img;
+			String shareImgFileName = FileUtil.storeFile(basePath, shareImgDirPath, shareImg, id);
+			
+			
+			// 图片和音乐上传成功后，存储路径到数据库
 			Activity activity2 = new Activity();
 			activity2.setId(id);
-			activity2.setBannerUrl("images/"+id+"/"+fileName);
+			activity2.setBannerUrl(path_banner + "/" + bannerFileName);
+			activity2.setMusicUrl(path_music + "/" + musicFileName);
+			activity2.setShareImg(path_share_img + "/" + shareImgFileName);
+			
 			Integer res2 = activityService.updateOne(activity2);
 			if(res2 != 1){
 				throw new Exception();
@@ -227,7 +291,7 @@ public class BackController {
 			rspMap.put("rspMsg", "系统繁忙！");
 			return rspMap;
 		}
-	}*/
+	}
 	
 	/**
 	 *  根据id查活动
@@ -256,7 +320,7 @@ public class BackController {
 	 */
 	@RequestMapping("activity/editActivity")
 	@ResponseBody
-	public Map<String,Object> editActivity(HttpServletRequest request,@RequestParam("banner") MultipartFile banner){
+	public Map<String,Object> editActivity(HttpServletRequest request,@RequestParam("banner") MultipartFile banner,@RequestParam("music") MultipartFile music,@RequestParam("shareImg") MultipartFile shareImg){
 		HashMap<String, Object> rspMap = new HashMap<String, Object>();
 		try {
 			String id_ = request.getParameter("id") != null ? request.getParameter("id") :"";
@@ -264,6 +328,15 @@ public class BackController {
 			String startTime = request.getParameter("startTime") != null ? request.getParameter("startTime") :"";
 			String endTime = request.getParameter("endTime") != null ? request.getParameter("endTime") :"";
 			String remark = request.getParameter("remark") != null ? request.getParameter("remark") :"";
+			
+			String bgColor = request.getParameter("bgColor") != null ? request.getParameter("bgColor") :"";
+			String btnColor = request.getParameter("btnColor") != null ? request.getParameter("btnColor") :"";
+			String btnTextColor = request.getParameter("btnTextColor") != null ? request.getParameter("btnTextColor") :"";
+			
+			String shareText = request.getParameter("shareText") != null ? request.getParameter("shareText") :"";
+			String baseNumber = request.getParameter("baseNumber") != null ? request.getParameter("baseNumber") :"";
+			String pvBaseNumber = request.getParameter("pvBaseNumber") != null ? request.getParameter("pvBaseNumber") :"";
+			
 			//校验参数
 			if(StringUtils.isBlank(name) || StringUtils.isBlank(startTime) || StringUtils.isBlank(endTime) || StringUtils.isBlank(id_)){
 				rspMap.put("rspCode", "0");
@@ -282,6 +355,38 @@ public class BackController {
 				return rspMap;
 			}
 			
+			String regex = "[0-9a-f]{6}";
+			Pattern colorPattern = Pattern.compile(regex);
+			if(!colorPattern.matcher(bgColor).matches()){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "背景色值格式有误！");
+				return rspMap;
+			}
+			
+			if(!colorPattern.matcher(btnColor).matches()){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "按钮色值格式有误！");
+				return rspMap;
+			}
+			
+			if(!colorPattern.matcher(btnTextColor).matches()){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "按钮内文字色值格式有误！");
+				return rspMap;
+			}
+			
+			if(!StringUtils.isNumeric(baseNumber) || Integer.parseInt(baseNumber) < 0 ){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "报名基数必须是大于等于0的整数！");
+				return rspMap;
+			}
+			
+			if(!StringUtils.isNumeric(pvBaseNumber) || Integer.parseInt(pvBaseNumber) < 0 ){
+				rspMap.put("rspCode", "0");
+				rspMap.put("rspMsg", "关注人数基数必须是大于等于0的整数！");
+				return rspMap;
+			}
+			
 			Integer id =Integer.parseInt(id_);
 			Activity activity = new Activity();
 			activity.setId(id);
@@ -289,40 +394,57 @@ public class BackController {
 			activity.setStartTime(startDate);
 			activity.setEndTime(endDate);
 			activity.setRemark(remark);
+			activity.setBgColor(bgColor);
+			activity.setBtnColor(btnColor);
+			activity.setBtnTextColor(btnTextColor);
+			activity.setShareText(shareText);
+			activity.setBaseNumber(Integer.parseInt(baseNumber));
+			activity.setPvBaseNumber(Integer.parseInt(pvBaseNumber));
 			
+			String basePath = PublicService.basePath;
 			if( !banner.isEmpty()){//文件不为空
 				if(!FileUtil.isImage(banner)){//文件类型错误
 					rspMap.put("rspCode", "0");
-					rspMap.put("rspMsg", "上传的图片格式错误！");
+					rspMap.put("rspMsg", "上传的活动图片格式错误！");
 					return rspMap;
 				}
-				//存储图片
-				String basePath = PublicService.basePath;
-				String dirPath = basePath + "images/" +id;
+				//存储banner图片
 				
-				File dir = new File(dirPath);
-				if (!dir.exists()) {// 判断目标目录是否存在
-					dir.mkdirs();// 不存在则创建
-				}
+				String path_banner = "images/" +id;
+				String dirPath = basePath + path_banner;
 				
-				File tmp = new File(basePath + "tmp");
-				if (!tmp.exists()) {
-					tmp.mkdirs();
-				}
-				String fileName = banner.getOriginalFilename();
-				String prefix = fileName.substring(fileName.lastIndexOf("."));
-
-				File tempFile = File.createTempFile(fileName, prefix, tmp);
-				banner.transferTo(tempFile);
-
-				fileName = System.currentTimeMillis() + "_";
-				fileName += id + prefix;
+				String bannerFileName = FileUtil.storeFile(basePath, dirPath, banner, id);
 				
-				File localFile = new File(dir, fileName);
-				tempFile.renameTo(localFile);
-				
-				activity.setBannerUrl("images/"+id+"/"+fileName);
+				activity.setBannerUrl((path_banner + "/" + bannerFileName));
 			}
+			
+			if( !music.isEmpty()){//文件不为空
+				if(!FileUtil.isAudio(music)){//文件类型错误
+					rspMap.put("rspCode", "0");
+					rspMap.put("rspMsg", "上传的音乐格式错误！");
+					return rspMap;
+				}
+				//存储音乐
+				String path_music = "audio/" +id;
+				String audioDirPath = basePath + path_music;
+				String musicFileName = FileUtil.storeFile(basePath, audioDirPath, music, id);
+				activity.setMusicUrl(path_music + "/" + musicFileName);
+			}
+			
+			if( !shareImg.isEmpty()){//文件不为空
+				if(!FileUtil.isImage(shareImg)){//文件类型错误
+					rspMap.put("rspCode", "0");
+					rspMap.put("rspMsg", "上传的微信分享图片格式错误！");
+					return rspMap;
+				}
+				//存储微信分享图片
+				String path_share_img = "share_img/" +id;
+				String shareImgDirPath = basePath + path_share_img;
+				String shareImgFileName = FileUtil.storeFile(basePath, shareImgDirPath, shareImg, id);
+				activity.setShareImg(path_share_img + "/" + shareImgFileName);
+			}
+			
+			
 			
 			// 修改数据库
 			Integer res2 = activityService.updateOne(activity);

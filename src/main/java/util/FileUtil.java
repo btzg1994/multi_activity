@@ -34,7 +34,6 @@ public class FileUtil {
 	public static boolean isImage(MultipartFile multfile) {
 		String contentType = multfile.getContentType();
 		String realType = contentType.substring(contentType.indexOf('/') + 1, contentType.length());
-		long fileSize = multfile.getSize();
 		if (contentType.contains("image")) {
 			if ((realType.equals("jpg") || realType.equals("jpeg") || realType.equals("png")
 					|| realType.contains("bmp") || realType.contains("gif"))) {
@@ -43,4 +42,48 @@ public class FileUtil {
 		}
 		return false;
 	}
+	
+	public static boolean isAudio(MultipartFile multfile) {
+		String contentType = multfile.getContentType();
+		String realType = contentType.substring(contentType.indexOf('/') + 1, contentType.length());
+		if (contentType.contains("audio")) {
+			if ((realType.equals("mp3"))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param basePath  配置文件中的目录
+	 * @param parentPath  父文件夹路径
+	 * @param multipartFile 文件
+	 * @param id  活动id
+	 * @throws Exception
+	 */
+	public static String storeFile(String basePath ,String parentPath,MultipartFile multipartFile,Integer id) throws Exception{
+		File dir = new File(parentPath);
+		if (!dir.exists()) {// 判断目标目录是否存在
+			dir.mkdirs();// 不存在则创建
+		}
+		
+		File tmp = new File(basePath + "tmp");
+		if (!tmp.exists()) {
+			tmp.mkdirs();
+		}
+		String fileName = multipartFile.getOriginalFilename();
+		String prefix = fileName.substring(fileName.lastIndexOf("."));
+
+		File tempFile = File.createTempFile(fileName, prefix, tmp);
+		multipartFile.transferTo(tempFile);
+
+		fileName = System.currentTimeMillis() + "_";
+		fileName += id + prefix;
+		
+		File localFile = new File(dir, fileName);
+		tempFile.renameTo(localFile);
+		return fileName;
+	}
+	
 }
