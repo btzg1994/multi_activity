@@ -315,8 +315,16 @@ $(function(){
 	                            <td>	<input  id="pvBaseNumber"  name="pvBaseNumber" type="number" class="form-control myinput" value="0"> </td>
 	                          </tr>
 	                          <tr>
+	                            <th>图片2：</th>
+	                            <td ><input style="border: none;" id="img2"  name="img2" type="file" class="form-control myinput" ><font style="color:red;">（此项非必填，建议图片长度：619，大小不超过50KB）</font></td>
+	                          </tr>
+	                          <tr>
+	                            <th>图片2跳转链接：</th>
+	                            <td><textarea id="img2Href" name="img2Href" rows="5" class="form-control myinput"></textarea><font style="color:red;">（此项非必填，此项为空则不显示图片2）</font></td>
+	                          </tr>
+	                          <tr>
 	                            <th>备注：</th>
-	                            <td><input id="remark" name="remark" type="text" class="form-control myinput" ></td>
+	                            <td><input id="remark" name="remark" type="text" class="form-control myinput" ><font style="color:red;">（此项非必填）</font></td>
 	                          </tr>
 	                      </table>
 	                        

@@ -231,6 +231,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			<!-- 播放器 -->
 			<div class="di">
 				<img  src="${pageContext.request.contextPath}/${activity.bannerUrl}"/>
+				<c:if test="${!empty activity.img2 && !empty activity.img2Href}">
+					<div  style="margin-left: 7%;margin-bottom:30px; width: 86%;border-radius: 10px;">
+	                	<a href="${activity.img2Href }"><img style="width: 100%;" src="${pageContext.request.contextPath}/${activity.img2}" /></a>
+	                </div>
+				</c:if>
 				<div class="guanzhu">
 					<div class="word1"> ${activity.pv + activity.pvBaseNumber}人正在关注</div>
 				</div>

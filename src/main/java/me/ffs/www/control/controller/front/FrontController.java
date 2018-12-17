@@ -47,6 +47,7 @@ public class FrontController {
 	public String index(@PathVariable("id") String id,HttpServletRequest request){
 		try {
 			if(!StringUtils.isNumeric(id)){
+				logger.info("活动id为空！");
 				throw new Exception("活动id为空！");
 			}	
 			int id_ = Integer.parseInt(id);

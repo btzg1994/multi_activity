@@ -1,17 +1,10 @@
 package me.ffs.www.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
-public class Activity implements Serializable{
-	
+public class Activity {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7434392207680596846L;
-
-	/**
      * 活动id
      */
     @Id
@@ -92,8 +85,13 @@ public class Activity implements Serializable{
     @Column(name = "pv_base_number")
     private Integer pvBaseNumber;
 
+    private String img2;
+
     @Column(name = "share_text")
     private String shareText;
+
+    @Column(name = "img2_href")
+    private String img2Href;
 
     /**
      * 获取活动id
@@ -358,6 +356,20 @@ public class Activity implements Serializable{
     }
 
     /**
+     * @return img2
+     */
+    public String getImg2() {
+        return img2;
+    }
+
+    /**
+     * @param img2
+     */
+    public void setImg2(String img2) {
+        this.img2 = img2;
+    }
+
+    /**
      * @return share_text
      */
     public String getShareText() {
@@ -369,5 +381,19 @@ public class Activity implements Serializable{
      */
     public void setShareText(String shareText) {
         this.shareText = shareText;
+    }
+
+    /**
+     * @return img2_href
+     */
+    public String getImg2Href() {
+        return img2Href;
+    }
+
+    /**
+     * @param img2Href
+     */
+    public void setImg2Href(String img2Href) {
+        this.img2Href = img2Href;
     }
 }

@@ -20,6 +20,8 @@
     <result column="share_img" property="shareImg" jdbcType="VARCHAR" />
     <result column="base_number" property="baseNumber" jdbcType="INTEGER" />
     <result column="pv_base_number" property="pvBaseNumber" jdbcType="INTEGER" />
+    <result column="img2" property="img2" jdbcType="VARCHAR" />
     <result column="share_text" property="shareText" jdbcType="LONGVARCHAR" />
+    <result column="img2_href" property="img2Href" jdbcType="LONGVARCHAR" />
   </resultMap>
 </mapper>
