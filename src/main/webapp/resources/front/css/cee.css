@@ -97,3 +97,21 @@ img{width: 100%;}
 
 .perror{ text-align:left; font-size:14px; color:#F00;}
 
+/*新增地市*/
+.xzds{ border:1px solid #dcdcdc; border-radius:5px; -webkit-border-radius:5px;}
+.xzdsn{ position:relative;}
+.dishitab{ display:table; width:100%;}
+.dishitab-lf{ display:table-cell; vertical-align:middle; width:50%; white-space:nowrap; padding-right:10px; font-size:15px; text-align:left; padding-left:10px;}
+.dishitab-rg{ display:table-cell; vertical-align:middle;}
+
+.xxselect{}
+.xxselect .selt{position:relative; height:48px;}
+
+.xxselect .selt .sval{position:absolute;text-indent:8px;z-index:1; display:block; text-align:left; display:block; left:0px; right:25px; text-indent:0; color: #222; padding-left:10px; overflow:hidden; height:48px;
+	font-size: 15px; line-height:3.2em; font-family:"微软雅黑", "宋体"; }
+.xxselect .selt select{position:absolute;width:100%;height:45px;opacity:0;z-index:2; text-align:center; left:0px;}
+.xxselect .selt:after{ position:absolute;width:8px;height:15px; right:10px;top:16px; display:block;width:0;height:0;content:'\00a0';top:50%;margin-top:-3px;background:none;border-width:6px;border-style:solid;border-color:#d81e06 transparent transparent transparent}
+
+.xxselect .selt .sval.c_tdefault{color:#888 !important; font-size:15px !important;}
+
+.wnqx{ border-right:1px solid #dcdcdc; padding:5px 0px;}

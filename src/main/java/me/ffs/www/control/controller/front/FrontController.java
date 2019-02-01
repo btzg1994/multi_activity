@@ -137,9 +137,9 @@ public class FrontController {
 	 */
 	@RequestMapping("anony/signup")
 	@ResponseBody
-	public String signup(String id,String name,String phone,HttpServletRequest request){
+	public String signup(String id,String name,String phone,String county,HttpServletRequest request){
 		String remoteIp = IpUtil.getRemoteIp(request);
-		logger.info("客户报名:IP[{}],活动id[{}],姓名[{}],电话[{}]",remoteIp,id,name,phone);
+		logger.info("客户报名:IP[{}],活动id[{}],姓名[{}],电话[{}],县区[{}]",remoteIp,id,name,phone,county);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
 			//校验入参
@@ -190,6 +190,7 @@ public class FrontController {
 			customer.setCreateTime(new Date());
 			customer.setName(name);
 			customer.setPhone(phone);
+			customer.setRemark1(county);
 			
 			Integer res = customerService.addOne(customer);
 			if(res == 1){

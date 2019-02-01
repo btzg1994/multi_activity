@@ -558,7 +558,7 @@ public class BackController {
 			String startDate = date + " 00:00:00";
 			String endDate = date + " 23:59:59";
 			List<Customer> customers = customerService.findByDateRangeAndActivityId(startDate, endDate, id_);
-			String head = "姓名,电话,报名时间\n";
+			String head = "姓名,电话,县区,报名时间\n";
 			StringBuffer sb = new StringBuffer();
 			sb.append(head);
 			// 下载
@@ -566,6 +566,7 @@ public class BackController {
 				for (Customer customer : customers) {
 					sb.append(customer.getName()).append(",");
 					sb.append(customer.getPhone()).append(",");
+					sb.append(customer.getRemark1()).append(",");
 					sb.append(DateUtils.formatDate(customer.getCreateTime(), PublicService.DATETIME_PATTERN));
 					sb.append("\n");
 				}

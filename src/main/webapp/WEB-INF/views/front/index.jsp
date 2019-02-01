@@ -20,7 +20,10 @@
 			var productName = '${activity.name}';
 			var productSubName = "${activity.shareText}";
 			var shareUrl = '${wxShareUrl}';//当前点击者的分享链接
-		
+			function selectCg(){
+				var text = $('#salarytype').find("option:selected").text();
+				$('#county').text(text);
+			}
 		</script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/front/js/wx_share.js"></script>
 		<style>
@@ -143,10 +146,11 @@
 				/* 确认报名 */
 				$('#signupBtn').click(function(){
 					var id = $('#aid').val();
+					
 					var name = $('#name').val();
 					var phone=formateNumGetBasicPhone($("#phone").mobilePhoneNumber('val'));
 					/* var phone = $('#phone').val(); */
-					
+					var county = $('#salarytype').val();
 					//校验
 					if(!id){
 						alert('服务器繁忙！');
@@ -169,6 +173,7 @@
 								"id": id,
 								"name": name,
 								"phone": phone,
+								'county':county
 							},
 						   function(data){
 						   		if(data.rspCode == 1){
@@ -351,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					 -webkit-transform: translate(-50%,0);background-color: rgba(255,255,255,0.5);max-width: 750px;margin: auto;" >
 				    <div style="width: 56%;max-width: 600px; background-color:#ffe92f ;margin: auto;
 					border-radius: 10px;margin-top: 10px;margin-left:23%; font-size: 20px;color: white;text-align: center;line-height: 40px;">
-						<div class="word1"  style="padding: 10px; font-size: 40px;">立即报名</div>
+						<div class="word1"  style="padding: 10px; font-size: 40px;">立即疯抢</div>
 					</div>
 			    </div> 
 				
@@ -375,6 +380,38 @@ document.addEventListener('DOMContentLoaded', function () {
                                          <dt>用户资料填写</dt>
                                          <dd><input id="name" type="text" class="input-dl" placeholder="请输入您的姓名"></dd>
                                          <dd><input id="phone" type="tel"  class="input-dl" placeholder="请输入您的手机号码" style="font-size:20px;"></dd>
+                                          <!--新增区域-->
+                                         <dd>
+                                             <div class="xzds">
+                                                 <div class="xzdsn">
+                                                     <div class="dishitab">
+                                                         <div class="dishitab-lf"><div class="wnqx">渭南市</div></div>
+                                                         <div class="dishitab-rg">
+                                                             <div class="xxselect">
+                                                                   <div class="selt">
+                                                                        <span id="county" class="sval c_tdefault">区/县选择</span>	
+                                                                        <span  class="sval" style="display:none">临渭区</span>	
+                                                                        <select id="salarytype" onchange="selectCg()">							
+                                                                            <option value="临渭区">临渭区</option>
+                                                                            <option value="华州区">华州区</option>
+                                                                            <option value="潼关">潼关县</option>
+                                                                            <option value="大荔">大荔县</option>
+                                                                            <option value="蒲城">蒲城县</option>
+                                                                            <option value="澄城">澄城县</option>
+                                                                            <option value="白水">白水县</option>
+                                                                            <option value="合阳">合阳县</option>
+                                                                            <option value="富平">富平县</option>
+                                                                            <option value="韩城">韩城县</option>
+                                                                            <option value="华阴">华阴县</option>
+                                                                        </select>
+                                                                    </div>
+                                                                  </div>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </dd>
+                                         <!--新增区域结束-->
                                          <dd><p class="perror"></p></dd>
                                          <dd>
                                              <div class="butdiv"><a id="signupBtn" href="javascript:;"><img src="${pageContext.request.contextPath}/resources/front/img/img-button2.png"></a></div>
